@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>AceStream</title>
+  <meta charset="utf-8">
+  <title>AceStream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body style="text-align:center;padding:50px;font-family:Arial;">
-    <h1>🔴 LIVE ▶️ Запуск...</h1>
-    <script>
-        const path = window.location.pathname;
-        const streamId = path.split('/').pop();
-        if (streamId.length === 40) {
-            setTimeout(() => {
-                window.location.href = `acestream://${streamId}`;
-            }, 300);
-        }
-    </script>
+  <h1>🔴 LIVE ▶️ Запуск...</h1>
+
+  <script>
+    // Берём ID из #HASH
+    const hash = (window.location.hash || "").replace("#", "").trim();
+    const streamId = hash;
+
+    if (/^[a-f0-9]{40}$/i.test(streamId)) {
+      setTimeout(() => {
+        window.location.href = `acestream://${streamId}`;
+      }, 300);
+    } else {
+      document.body.innerHTML = "<h2>❌ Некорректная ссылка</h2>";
+    }
+  </script>
 </body>
 </html>
